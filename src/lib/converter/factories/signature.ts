@@ -119,7 +119,9 @@ export function createSignature(
             break;
         case ReflectionKind.CallSignature:
         case ReflectionKind.ConstructorSignature:
-            context.scope.signatures ??= [];
+            if (context.scope.signatures === null || context.scope.signatures === undefined) {
+                context.scope.signatures = [];
+            }
             context.scope.signatures.push(sigRef);
             break;
     }
@@ -172,7 +174,9 @@ export function createConstructSignatureWithType(
 
     context.registerReflection(sigRef, undefined);
 
-    context.scope.signatures ??= [];
+    if (context.scope.signatures === null || context.scope.signatures === undefined) {
+        context.scope.signatures = [];
+    }
     context.scope.signatures.push(sigRef);
 
     context.converter.trigger(

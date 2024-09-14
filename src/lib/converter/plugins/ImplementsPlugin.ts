@@ -485,13 +485,19 @@ function constructorInheritance(
 
     const key = constructorDecl ? "overwrites" : "inheritedFrom";
 
-    reflection[key] ??= ReferenceType.createBrokenReference(
-        name,
-        context.project,
-    );
+    if (reflection[key] === null || reflection[key] === undefined) {
+        reflection[key] = ReferenceType.createBrokenReference(
+                name,
+                context.project,
+            );
+    }
+    
 
     for (const sig of reflection.signatures ?? []) {
-        sig[key] ??= ReferenceType.createBrokenReference(name, context.project);
+        if (sig[key] === null || sig[key] === undefined) {
+            sig[key] = ReferenceType.createBrokenReference(name, context.project);
+        }
+        
     }
 }
 
@@ -534,24 +540,30 @@ function createLink(
         if (!target) return;
 
         if (clause.token === ts.SyntaxKind.ImplementsKeyword) {
-            target.implementationOf ??= ReferenceType.createBrokenReference(
-                name,
-                project,
-            );
+            if (target.implementationOf === null || target.implementationOf === undefined) {
+                target.implementationOf = ReferenceType.createBrokenReference(
+                    name,
+                    project,
+                );
+            }
             return;
         }
 
         if (isInherit) {
             target.setFlag(ReflectionFlag.Inherited);
-            target.inheritedFrom ??= ReferenceType.createBrokenReference(
-                name,
-                project,
-            );
+            if (target.inheritedFrom === null || target.inheritedFrom === undefined) {
+                target.inheritedFrom = ReferenceType.createBrokenReference(
+                    name,
+                    project,
+                );
+            }
         } else {
-            target.overwrites ??= ReferenceType.createBrokenReference(
-                name,
-                project,
-            );
+            if (target.overwrites === null || target.overwrites === undefined) {
+                target.overwrites = ReferenceType.createBrokenReference(
+                    name,
+                    project,
+                );
+            }
         }
     }
 }

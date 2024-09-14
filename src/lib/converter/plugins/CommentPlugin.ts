@@ -145,9 +145,12 @@ export class CommentPlugin extends ConverterComponent {
 
     private _excludeKinds: number | undefined;
     private get excludeNotDocumentedKinds(): number {
-        this._excludeKinds ??= this.application.options
-            .getValue("excludeNotDocumentedKinds")
-            .reduce((a, b) => a | ReflectionKind[b], 0);
+        if (this._excludeKinds === null || this._excludeKinds === undefined) {
+            this._excludeKinds = this.application.options
+                .getValue("excludeNotDocumentedKinds")
+                .reduce((a, b) => a | ReflectionKind[b], 0);
+        }
+        
         return this._excludeKinds;
     }
 

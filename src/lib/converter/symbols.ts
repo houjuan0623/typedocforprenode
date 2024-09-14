@@ -1079,7 +1079,10 @@ function convertVariableAsFunction(
 
     const reflectionContext = context.withScope(reflection);
 
-    reflection.signatures ??= [];
+    if (reflection.signatures === null || reflection.signatures === undefined) {
+        reflection.signatures = [];
+    }
+    
     for (const signature of type.getCallSignatures()) {
         createSignature(
             reflectionContext,
