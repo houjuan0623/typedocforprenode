@@ -1,0 +1,12 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "targets": {
+                    "node": "14" // 或者你希望支持的最低 Node.js 版本
+                }
+            }
+        ]
+    ]
+}
