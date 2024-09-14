@@ -127,7 +127,10 @@ export class GitRepository implements Repository {
         gitRemote: string,
         logger: Logger,
     ): GitRepository | undefined {
-        gitRevision ||= git("-C", path, "rev-parse", "HEAD").stdout.trim();
+        if (!gitRevision) {
+            gitRevision = git("-C", path, "rev-parse", "HEAD").stdout.trim();
+        }
+        
         if (!gitRevision) return; // Will only happen in a repo with no commits.
 
         let urlTemplate: string | undefined;

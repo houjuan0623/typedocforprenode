@@ -65,14 +65,23 @@ export abstract class ContainerReflection extends Reflection {
 
     addChild(child: DeclarationReflection | DocumentReflection) {
         if (child.isDeclaration()) {
-            this.children ||= [];
+            if (!this.children) {
+                this.children = [];
+            }
+            
             this.children.push(child);
         } else {
-            this.documents ||= [];
+            if (!this.documents) {
+                this.documents = [];
+            }
+            
             this.documents.push(child);
         }
 
-        this.childrenIncludingDocuments ||= [];
+        if (!this.childrenIncludingDocuments) {
+            this.childrenIncludingDocuments = [];
+        }
+        
         this.childrenIncludingDocuments.push(child);
     }
 
@@ -147,7 +156,10 @@ export abstract class ContainerReflection extends Reflection {
         for (const id of obj.childrenIncludingDocuments || []) {
             const child = byId.get(de.oldIdToNewId[id] ?? -1);
             if (child) {
-                this.childrenIncludingDocuments ||= [];
+                if (!this.childrenIncludingDocuments) {
+                    this.childrenIncludingDocuments = [];
+                }
+                
                 this.childrenIncludingDocuments.push(child);
                 byId.delete(de.oldIdToNewId[id] ?? -1);
             }
@@ -155,7 +167,13 @@ export abstract class ContainerReflection extends Reflection {
         if (byId.size) {
             // Anything left in byId wasn't included in the childrenIncludingDocuments array.
             // This is expected if we're dealing with a JSON file produced by TypeDoc 0.25.
-            this.childrenIncludingDocuments ||= [];
+            if (!this.childrenIncludingDocuments) {
+                if (!this.childrenIncludingDocuments) {
+                    this.childrenIncludingDocuments = [];
+                }
+                
+            }
+            
             this.childrenIncludingDocuments.push(...byId.values());
         }
 

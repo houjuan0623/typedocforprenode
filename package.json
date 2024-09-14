@@ -16,9 +16,6 @@
   "bugs": {
     "url": "https://github.com/TypeStrong/TypeDoc/issues"
   },
-  "engines": {
-    "node": ">= 18"
-  },
   "dependencies": {
     "lunr": "^2.3.9",
     "markdown-it": "^14.1.0",
@@ -30,9 +27,9 @@
     "typescript": "4.6.x || 4.7.x || 4.8.x || 4.9.x || 5.0.x || 5.1.x || 5.2.x || 5.3.x || 5.4.x || 5.5.x || 5.6.x"
   },
   "devDependencies": {
-    "@babel/cli": "^7.25.6",
-    "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.4",
+    "@babel/core": "~7.22.20",
+    "@babel/preset-env": "~7.22.20",
+    "@babel/cli": "~7.22.15",
     "@types/lunr": "^2.3.7",
     "@types/markdown-it": "^14.1.2",
     "@types/mocha": "^10.0.7",
@@ -78,7 +75,8 @@
     "prettier": "prettier --config .config/.prettierrc.json --ignore-path .config/.prettierignore",
     "prepack": "node scripts/set_strict.js false && npm run build:prod",
     "prepare": "node scripts/prepare.mjs",
-    "postpublish": "node scripts/set_strict.js true"
+    "postpublish": "node scripts/set_strict.js true",
+    "postinstall": "babel node_modules --out-dir node_modules --copy-files"
   },
   "keywords": [
     "typescript",

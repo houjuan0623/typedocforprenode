@@ -422,7 +422,9 @@ export class DefaultTheme extends Theme {
                 if (path.length > 1) {
                     const inner = root.find((el) => el.text === path[0]);
                     if (inner) {
-                        inner.children ||= [];
+                        if (!inner.children) {
+                            inner.children = []; 
+                        }
                         return resolveOrCreateParents(path.slice(1), inner.children);
                     } else {
                         root.push({

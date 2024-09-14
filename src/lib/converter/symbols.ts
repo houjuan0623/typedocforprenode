@@ -392,10 +392,12 @@ function attachUnionComments(
         }
 
         if (comment) {
-            union.elementSummaries ||= Array.from(
-                { length: union.types.length },
-                () => [],
-            );
+            if (!union.elementSummaries) {
+                union.elementSummaries = Array.from(
+                    { length: union.types.length },
+                    () => [],
+                );
+            }
             union.elementSummaries[unionIndex] = comment.summary;
         }
 

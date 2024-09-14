@@ -28,7 +28,10 @@ function buildNameTree(
     tree: NameTree = {},
 ): NameTree {
     for (const child of refl.children || []) {
-        tree[child.name] ||= {};
+        if (!tree[child.name]) {
+            tree[child.name] = {};
+        }
+        
         buildNameTree(child, tree[child.name]);
     }
 

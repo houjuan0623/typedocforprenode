@@ -545,7 +545,10 @@ export class CommentPlugin extends ConverterComponent {
                     !exclusiveSet ||
                     Array.from(exclusiveSet).every((tag) => !childMods.has(tag))
                 ) {
-                    reflection.comment ||= new Comment();
+                    if(!reflection.comment) {
+                        reflection.comment = new Comment();
+                    }
+                    
                     reflection.comment.modifierTags.add(mod);
                 }
             }

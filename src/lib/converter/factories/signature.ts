@@ -32,9 +32,12 @@ export function createSignature(
 ) {
     assert(context.scope instanceof DeclarationReflection);
 
-    declaration ||= signature.getDeclaration() as
+    if (!declaration) {
+        declaration = signature.getDeclaration() as
         | ts.SignatureDeclaration
         | undefined;
+    }
+    
 
     const sigRef = new SignatureReflection(
         kind == ReflectionKind.ConstructorSignature
@@ -218,7 +221,10 @@ function convertParameters(
         if (declaration && ts.isJSDocParameterTag(declaration)) {
             paramRefl.comment = context.getJsDocComment(declaration);
         }
-        paramRefl.comment ||= context.getComment(param, paramRefl.kind);
+        if (!paramRefl.comment) {
+            paramRefl.comment = context.getComment(param, paramRefl.kind);
+        }
+        
 
         context.registerReflection(paramRefl, param);
         context.converter.trigger(

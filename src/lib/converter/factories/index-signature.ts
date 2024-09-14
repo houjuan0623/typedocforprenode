@@ -43,7 +43,10 @@ export function convertIndexSignatures(context: Context, symbol: ts.Symbol) {
             indexDeclaration.type,
         );
         context.registerReflection(index, indexSymbol);
-        context.scope.indexSignatures ||= [];
+        if (!context.scope.indexSignatures) {
+            context.scope.indexSignatures = [];
+        }
+        
         context.scope.indexSignatures.push(index);
 
         context.converter.trigger(

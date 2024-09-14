@@ -59,7 +59,10 @@ export class TypePlugin extends ConverterComponent {
 
             walk(reflection.implementedTypes, (target) => {
                 this.postpone(target);
-                target.implementedBy ||= [];
+                if(!target.implementedBy) {
+                    target.implementedBy = [];
+                }
+                
                 if (createLinks) {
                     target.implementedBy.push(
                         ReferenceType.createResolvedReference(
@@ -73,7 +76,10 @@ export class TypePlugin extends ConverterComponent {
 
             walk(reflection.extendedTypes, (target) => {
                 this.postpone(target);
-                target.extendedBy ||= [];
+                if (!target.extendedBy) {
+                    target.extendedBy = [];
+                }
+                
 
                 if (createLinks) {
                     target.extendedBy.push(

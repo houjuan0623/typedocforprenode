@@ -51,7 +51,10 @@ export class DocumentReflection extends Reflection {
     }
 
     addChild(child: DocumentReflection) {
-        this.children ||= [];
+        if (!this.children) {
+            this.children = []; 
+        }
+        
         this.children.push(child);
     }
 

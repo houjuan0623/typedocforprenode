@@ -20,8 +20,13 @@ const htmlEntitiesTrie: Trie = {};
 for (const [name, data] of Object.entries(htmlEntities)) {
     let current = htmlEntitiesTrie;
     for (let i = 0; i < name.length; ++i) {
-        current.children ||= {};
-        current = current.children[name.charCodeAt(i)] ||= {};
+        if (!current.children) {
+            current.children = {};
+        }
+        if (!current.children[name.charCodeAt(i)]) {
+            current.children[name.charCodeAt(i)] = {};
+        }
+        current = current.children[name.charCodeAt(i)] as Trie; 
     }
     current.data = data;
 }

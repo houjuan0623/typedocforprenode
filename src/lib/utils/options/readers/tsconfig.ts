@@ -246,11 +246,17 @@ export class TSConfigReader implements OptionsReader {
 
 function mergeConfigs(from: TsDocSchema, into: TsDocSchema) {
     if (from.supportForTags) {
-        into.supportForTags ||= {};
+        if (!into.supportForTags) {
+            into.supportForTags = {};
+        }
+        
         Object.assign(into.supportForTags, from.supportForTags);
     }
     if (from.tagDefinitions) {
-        into.tagDefinitions ||= [];
+        if (!into.tagDefinitions) {
+            into.tagDefinitions = [];
+        }
+        
         into.tagDefinitions.push(...from.tagDefinitions);
     }
 

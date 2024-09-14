@@ -97,7 +97,10 @@ export class SourcePlugin extends ConverterComponent {
                 );
             }
 
-            reflection.sources ||= [];
+            if (!reflection.sources) {
+                reflection.sources = [];
+            }
+            
             reflection.sources.push(
                 new SourceReference(
                     fileName,
@@ -127,7 +130,10 @@ export class SourcePlugin extends ConverterComponent {
             getLocationNode(sig).getStart(),
         );
 
-        reflection.sources ||= [];
+        if (!reflection.sources) {
+            reflection.sources = [];
+        }
+
         reflection.sources.push(
             new SourceReference(
                 fileName,
@@ -163,14 +169,17 @@ export class SourcePlugin extends ConverterComponent {
 
         const basePath =
             this.basePath || getCommonDirectory([...this.fileNames]);
-        this.repositories ||= new RepositoryManager(
-            basePath,
-            this.gitRevision,
-            this.gitRemote,
-            this.sourceLinkTemplate,
-            this.disableGit,
-            this.application.logger,
-        );
+        if (!this.repositories) {
+            this.repositories = new RepositoryManager(
+                basePath,
+                this.gitRevision,
+                this.gitRemote,
+                this.sourceLinkTemplate,
+                this.disableGit,
+                this.application.logger,
+            );
+        }
+        
 
         for (const id in context.project.reflections) {
             const refl = context.project.reflections[id];

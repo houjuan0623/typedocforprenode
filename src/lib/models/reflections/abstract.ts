@@ -388,9 +388,12 @@ export abstract class Reflection {
      * Return an url safe alias for this reflection.
      */
     getAlias(): string {
-        this._alias ||= this.getUniqueAliasInPage(
-            this.name.replace(/\W/g, "_") || `reflection-${this.id}`,
-        );
+        if (!this._alias) {
+            this._alias = this.getUniqueAliasInPage(
+                this.name.replace(/\W/g, "_") || `reflection-${this.id}`,
+            );
+        }
+        
 
         return this._alias;
     }
@@ -408,7 +411,10 @@ export abstract class Reflection {
             target = target.parent;
         }
 
-        target._aliases ||= new Map();
+        if (!target._aliases) {
+            target._aliases = new Map();
+        }
+        
 
         let suffix = "";
         if (!target._aliases.has(upperAlias)) {
